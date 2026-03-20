@@ -122,9 +122,4 @@ http://127.0.0.1:8080/scan
 - Designed a data pipeline using BigQuery
 - Applied IAM best practices for secure service access
 
-## ⚠️ Final Check
-
-Make sure this file exists:
-
-docs/images/cloudguard-architecture-diagram.png
 
