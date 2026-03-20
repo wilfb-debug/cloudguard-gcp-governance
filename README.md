@@ -75,8 +75,9 @@ The Cloud Run service uses least-privilege access:
 
 ## Project Structure
 
+```
 cloudguard-gcp-governance/
-
+│
 ├── app/
 │   ├── main.py
 │   ├── scanner.py
@@ -85,6 +86,7 @@ cloudguard-gcp-governance/
 ├── docs/
 │   ├── images/
 │   │   └── cloudguard-architecture-diagram.png
+│   │
 │   └── evidence/
 │       ├── cloud-run-home-working.png
 │       ├── cloud-run-scan-results.png
@@ -95,6 +97,7 @@ cloudguard-gcp-governance/
 │
 ├── requirements.txt
 └── README.md
+```
 
 ## Running Locally
 
