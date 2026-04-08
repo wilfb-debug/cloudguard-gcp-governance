@@ -1,8 +1,12 @@
-# cloudguard-gcp-governance
-
-A GCP governance platform that scans cloud resources for security, cost, and compliance risks using Cloud Run, Cloud Asset Inventory, BigQuery, and Looker Studio.
-
 # CloudGuard – GCP Governance & Risk Visibility Platform
+
+[![CI](https://github.com/wilfb-debug/cloudguard-gcp-governance/actions/workflows/ci.yml/badge.svg)](https://github.com/wilfb-debug/cloudguard-gcp-governance/actions/workflows/ci.yml)
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
+![GCP](https://img.shields.io/badge/GCP-Cloud_Run-4285F4?logo=googlecloud&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-41_passing-brightgreen)
+![Coverage](https://img.shields.io/badge/coverage-80%25+-brightgreen)
+
+> Serverless GCP governance platform — scans cloud resources for security misconfigurations, cost waste, and compliance violations. Findings written to BigQuery and queryable via REST API with filtering and pagination.
 
 ## Project Question
 
