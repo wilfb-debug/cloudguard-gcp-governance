@@ -55,7 +55,10 @@ def check_vm_public_ip(
                     finding_title="VM has public IP",
                     category="Security",
                     severity="High",
-                    recommendation="Remove external IP and use private access patterns such as IAP, load balancing, or bastion alternatives.",
+                    recommendation=(
+                        "Remove external IP and use private access patterns "
+                        "such as IAP, load balancing, or bastion alternatives."
+                    ),
                 )
             )
             break
@@ -121,7 +124,10 @@ def check_missing_labels(
                 finding_title=f"Missing required labels: {', '.join(missing)}",
                 category="Governance",
                 severity="Medium",
-                recommendation="Apply consistent labels such as env and owner for governance, reporting, and accountability.",
+                recommendation=(
+                    "Apply consistent labels such as env and owner "
+                    "for governance, reporting, and accountability."
+                ),
             )
         )
 
@@ -153,7 +159,10 @@ def check_unattached_disk(
                 finding_title="Unattached persistent disk",
                 category="Cost",
                 severity="Medium",
-                recommendation="Review whether the disk is still needed. Remove unused disks to reduce waste.",
+                recommendation=(
+                    "Review whether the disk is still needed. "
+                    "Remove unused disks to reduce waste."
+                ),
             )
         )
 
