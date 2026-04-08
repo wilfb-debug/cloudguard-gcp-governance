@@ -6,6 +6,8 @@
 ![Tests](https://img.shields.io/badge/tests-41_passing-brightgreen)
 ![Coverage](https://img.shields.io/badge/coverage-80%25+-brightgreen)
 
+**🚀 Live Demo:** https://cloudguard-922790829947.europe-west2.run.app
+
 > Serverless GCP governance platform — scans cloud resources for security misconfigurations, cost waste, and compliance violations. Findings written to BigQuery and queryable via REST API with filtering and pagination.
 
 ## Project Question
