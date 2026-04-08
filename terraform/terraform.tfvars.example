@@ -1,1 +1,2 @@
-
+project_id = "cloudguard-platform"
+region     = "europe-west2"
