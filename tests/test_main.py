@@ -48,6 +48,23 @@ class TestHomeEndpoint:
         assert "CloudGuard" in data["message"]
 
 
+class TestHealthEndpoint:
+    def test_returns_200(self, client):
+        response = client.get("/health")
+        assert response.status_code == 200
+
+    def test_returns_status_ok(self, client):
+        response = client.get("/health")
+        data = response.get_json()
+        assert data["status"] == "ok"
+
+    def test_returns_version(self, client):
+        response = client.get("/health")
+        data = response.get_json()
+        assert "version" in data
+        assert data["version"] != ""
+
+
 class TestScanEndpoint:
     @patch("main.write_findings_to_bigquery", return_value=[])
     @patch("main.run_scan", return_value=[SAMPLE_FINDING])
