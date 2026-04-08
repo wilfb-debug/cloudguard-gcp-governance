@@ -32,6 +32,11 @@ jobs:
         run: |
           flake8 app/ --max-line-length=100 --exclude=app/venv
 
+      - name: Type check (mypy)
+        run: |
+          pip install mypy --quiet
+          mypy app/ --ignore-missing-imports --exclude app/venv
+
       - name: Test (pytest)
         run: |
           python -m pytest tests/ -v --cov=app --cov-report=term-missing --cov-fail-under=80

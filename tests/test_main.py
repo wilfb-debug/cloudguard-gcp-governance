@@ -65,6 +65,81 @@ class TestHealthEndpoint:
         assert data["version"] != ""
 
 
+class TestFindingsEndpoint:
+    @patch("main.run_scan", return_value=[
+        {**SAMPLE_FINDING, "severity": "High", "category": "Security", "check_id": "CG-001"},
+        {**SAMPLE_FINDING, "severity": "Medium", "category": "Cost", "check_id": "CG-004"},
+        {**SAMPLE_FINDING, "severity": "High", "category": "Governance", "check_id": "CG-003"},
+    ])
+    def test_returns_all_findings_unfiltered(self, mock_scan, client):
+        response = client.get("/findings")
+        data = response.get_json()
+        assert response.status_code == 200
+        assert data["total"] == 3
+
+    @patch("main.run_scan", return_value=[
+        {**SAMPLE_FINDING, "severity": "High", "category": "Security", "check_id": "CG-001"},
+        {**SAMPLE_FINDING, "severity": "Medium", "category": "Cost", "check_id": "CG-004"},
+    ])
+    def test_filters_by_severity(self, mock_scan, client):
+        response = client.get("/findings?severity=High")
+        data = response.get_json()
+        assert data["total"] == 1
+        assert data["findings"][0]["severity"] == "High"
+
+    @patch("main.run_scan", return_value=[
+        {**SAMPLE_FINDING, "severity": "High", "category": "Security", "check_id": "CG-001"},
+        {**SAMPLE_FINDING, "severity": "Medium", "category": "Cost", "check_id": "CG-004"},
+    ])
+    def test_filters_by_category(self, mock_scan, client):
+        response = client.get("/findings?category=Cost")
+        data = response.get_json()
+        assert data["total"] == 1
+        assert data["findings"][0]["category"] == "Cost"
+
+    @patch("main.run_scan", return_value=[
+        {**SAMPLE_FINDING, "severity": "High", "category": "Security", "check_id": "CG-001"},
+        {**SAMPLE_FINDING, "severity": "High", "category": "Security", "check_id": "CG-002"},
+    ])
+    def test_filters_by_check_id(self, mock_scan, client):
+        response = client.get("/findings?check_id=CG-001")
+        data = response.get_json()
+        assert data["total"] == 1
+        assert data["findings"][0]["check_id"] == "CG-001"
+
+    @patch("main.run_scan", return_value=[SAMPLE_FINDING] * 10)
+    def test_pagination_limit(self, mock_scan, client):
+        response = client.get("/findings?limit=3")
+        data = response.get_json()
+        assert data["total"] == 10
+        assert len(data["findings"]) == 3
+
+    @patch("main.run_scan", return_value=[SAMPLE_FINDING] * 5)
+    def test_pagination_offset(self, mock_scan, client):
+        response = client.get("/findings?limit=3&offset=4")
+        data = response.get_json()
+        assert len(data["findings"]) == 1
+
+    def test_invalid_severity_returns_400(self, client):
+        response = client.get("/findings?severity=CRITICAL")
+        assert response.status_code == 400
+
+    def test_invalid_category_returns_400(self, client):
+        response = client.get("/findings?category=Unknown")
+        assert response.status_code == 400
+
+    def test_invalid_limit_returns_400(self, client):
+        response = client.get("/findings?limit=notanumber")
+        assert response.status_code == 400
+
+    @patch("main.run_scan", return_value=[])
+    def test_empty_findings_returns_zero_total(self, mock_scan, client):
+        response = client.get("/findings")
+        data = response.get_json()
+        assert data["total"] == 0
+        assert data["findings"] == []
+
+
 class TestScanEndpoint:
     @patch("main.write_findings_to_bigquery", return_value=[])
     @patch("main.run_scan", return_value=[SAMPLE_FINDING])
