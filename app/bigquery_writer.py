@@ -15,7 +15,7 @@ def write_findings_to_bigquery(
     client = bigquery.Client(project=project_id)
     table_ref: str = f"{project_id}.{DATASET_ID}.{TABLE_ID}"
 
-    errors: list[Any] = client.insert_rows_json(table_ref, findings)
+    errors: list[Any] = list(client.insert_rows_json(table_ref, findings))
 
     if errors:
         print("BigQuery insert errors:", errors)
